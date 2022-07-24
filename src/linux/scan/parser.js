@@ -23,7 +23,6 @@ const parse = stdout =>
         // eslint-disable-next-line no-unused-vars
         bssidAlreadyProcessed,
         mode,
-        channel,
         frequency,
         quality,
         security,
@@ -32,11 +31,10 @@ const parse = stdout =>
       ] = fields;
 
       return {
-        ssid,
+        ssid: ssid.replace(/^'|'$/g, ''),
         bssid,
         mac: bssid, // for retrocompatibility with version 1.x
         mode,
-        channel: parseInt(channel),
         frequency: parseInt(frequency),
         signal_level: dBFromPercentage(quality),
         quality: parseInt(quality),
