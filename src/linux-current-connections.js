@@ -7,7 +7,7 @@ function getCurrentConnection(config, callback) {
   args.push('--terse');
   args.push('--fields');
   args.push(
-    'active,ssid,bssid,mode,chan,freq,signal,security,wpa-flags,rsn-flags,device'
+    'active,ssid,bssid,mode,freq,signal,security,wpa-flags,rsn-flags,device'
   );
   args.push('device');
   args.push('wifi');
@@ -32,21 +32,20 @@ function getCurrentConnection(config, callback) {
         const fields = lines[i].replace(/\\:/g, '&&').split(':');
         if (fields[0] == 'yes') {
           networks.push({
-            iface: fields[10].replace(/&&/g, ':'),
-            ssid: fields[1].replace(/&&/g, ':'),
+            iface: fields[9].replace(/&&/g, ':'),
+            ssid: fields[1].replace(/&&/g, ':').replace(/^'|'$/g, ''),
             bssid: fields[2].replace(/&&/g, ':'),
             mac: fields[2].replace(/&&/g, ':'), // for retrocompatibility with version 1.x
             mode: fields[3].replace(/&&/g, ':'),
-            channel: parseInt(fields[4].replace(/&&/g, ':')),
-            frequency: parseInt(fields[5].replace(/&&/g, ':')),
+            frequency: parseInt(fields[4].replace(/&&/g, ':')),
             signal_level: networkUtils.dBFromQuality(
-              fields[6].replace(/&&/g, ':')
+              fields[5].replace(/&&/g, ':')
             ),
-            quality: parseFloat(fields[6].replace(/&&/g, ':')),
-            security: fields[7].replace(/&&/g, ':'),
+            quality: parseFloat(fields[5].replace(/&&/g, ':')),
+            security: fields[6].replace(/&&/g, ':'),
             security_flags: {
-              wpa: fields[8].replace(/&&/g, ':'),
-              rsn: fields[9].replace(/&&/g, ':')
+              wpa: fields[7].replace(/&&/g, ':'),
+              rsn: fields[8].replace(/&&/g, ':')
             }
           });
         }

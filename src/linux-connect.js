@@ -3,8 +3,6 @@ const env = require('./env');
 
 function connectToWifi(config, ap, callback) {
   const args = [];
-  args.push('-w');
-  args.push('10');
   args.push('device');
   args.push('wifi');
   args.push('connect');
