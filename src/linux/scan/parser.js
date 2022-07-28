@@ -44,6 +44,7 @@ const parse = stdout =>
           rsn: security_flags_rsn
         }
       };
-    });
+    })
+    .filter((value, index, self) => self.findIndex(item => item.ssid === value.ssid) === index);
 
 module.exports = parse;
